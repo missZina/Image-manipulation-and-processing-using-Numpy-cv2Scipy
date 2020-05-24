@@ -1,0 +1,50 @@
+# Edges Detection
+#It is a three-channel image (RGB). We need to convert it into grayscale so that we only have a single channel. Doing this will also help us get a better understanding of how the algorithm works.
+#
+gray = rgb2gray(image)
+plt.imshow(gray, cmap='gray')
+
+#apply threshold to this image. This threshold should separate the image into two parts – the foreground and the background. Before we do that, let’s quickly check the shape of this image:
+
+gray.shape
+# After running we find The height and width of the image is 246 and  364 respectively
+
+gray_r = gray.reshape(gray.shape[0]*gray.shape[1])
+for i in range(gray_r.shape[0]):
+    if gray_r[i] > gray_r.mean():
+        gray_r[i] = 1
+    else:
+        gray_r[i] = 0
+gray = gray_r.reshape(gray.shape[0],gray.shape[1])
+plt.imshow(gray, cmap='gray')
+#The darker region (black) represents the background and the brighter (white) region is the foreground.
+#We can define multiple thresholds as well to detect multiple objects
+###
+gray = rgb2gray(image)
+gray_r = gray.reshape(gray.shape[0]*gray.shape[1])
+for i in range(gray_r.shape[0]):
+    if gray_r[i] > gray_r.mean():
+        gray_r[i] = 3
+    elif gray_r[i] > 0.5:
+        gray_r[i] = 2
+    elif gray_r[i] > 0.25:
+        gray_r[i] = 1
+    else:
+        gray_r[i] = 0
+gray = gray_r.reshape(gray.shape[0],gray.shape[1])
+plt.imshow(gray, cmap='gray')
+#Edge detection works by convolving these filters over the given image
+# converting to grayscale
+gray = rgb2gray(image)
+
+# defining the sobel filters
+sobel_horizontal = np.array([np.array([1, 2, 1]), np.array([0, 0, 0]), np.array([-1, -2, -1])])
+print(sobel_horizontal, 'is a kernel for detecting horizontal edges')
+ 
+sobel_vertical = np.array([np.array([-1, 0, 1]), np.array([-2, 0, 2]), np.array([-1, 0, 1])])
+print(sobel_vertical, 'is a kernel for detecting vertical edges')
+
+#convolve this filter over the image using the convolve function of the ndimage package from scipy.
+out_h = ndimage.convolve(gray, sobel_horizontal, mode='reflect')
+out_v = ndimage.convolve(gray, sobel_vertical, mode='reflect')
+plt.imshow(out_h, cmap='gray')
