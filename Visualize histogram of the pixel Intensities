@@ -1,0 +1,6 @@
+ Visualize histogram of the pixel Intensities
+counts, vals = np.histogram(grayscale, bins=range(2 ** 8))
+plt.plot(range(0, (2 ** 8) - 1), counts)
+plt.title('Grayscale image histogram')
+plt.xlabel('Pixel intensity')
+plt.ylabel('Count')
