@@ -1,0 +1,4 @@
+median_filtered = scipy.ndimage.median_filter(grayscale, size=3)
+plt.imshow(median_filtered, cmap='gray')
+plt.axis('off')
+plt.title('median filtered image')
