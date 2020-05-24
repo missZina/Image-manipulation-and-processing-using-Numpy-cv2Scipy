@@ -1,0 +1,6 @@
+plt.imshow(image[100:180, 100:180], cmap=plt.cm.gray, interpolation='nearest')  
+#Basic Manipulation 
+face = image
+face[0, 40]
+# Slicing
+face[10:13, 20:23]
